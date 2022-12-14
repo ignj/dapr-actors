@@ -15,4 +15,18 @@ app.MapGet("/trigger", async () =>
     Console.WriteLine($"Result was {result}");
 });
 
+app.MapGet("/trigger-count", async () =>
+{
+    await ActorProxy.Create<IActorMaster>(new ActorId("1"), "ActorMaster").CountNumbers();
+
+    Console.WriteLine($"Count finished");
+});
+
+app.MapGet("/get-count", async () =>
+{
+    var result = await ActorProxy.Create<IActorMaster>(new ActorId("1"), "ActorMaster").GetCounter();
+
+    Console.WriteLine($"Result was {result}");
+});
+
 app.Run();

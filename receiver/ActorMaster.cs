@@ -6,7 +6,26 @@ using shared;
 namespace receiver;
 public class ActorMaster : Actor, IActorMaster
 {
+    public int Counter { get; set; } = default;
+
     public ActorMaster(ActorHost host) : base(host) { }
+
+    public async Task CountNumbers()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            await Task.Delay(1000);
+
+            Counter++;
+
+            Logger.LogInformation("Counter is {State}", Counter);
+        }
+    }
+
+    public async Task<int> GetCounter()
+    {
+        return Counter;
+    }
 
     public async Task<int> OrchestrateWork(Guid id)
     {
